@@ -13,6 +13,11 @@ AWESOMENESS = [
     'oh-so-not-meh', 'brilliant', 'ducky', 'coolio', 'incredible',
     'wonderful', 'smashing', 'lovely']
 
+DISSES = [ 
+    'dissapointing', 'unreasonable', 'verbose', 'untimely', 'insensitive',
+    'asleep', 'sloppy', 'meh', 'mainstream', 'dull', 'lazy', 'sloth like',
+    'useless', 'selfish', 'unwanted']
+
 
 @app.route('/')
 def start_here():
@@ -23,7 +28,7 @@ def start_here():
     <html>
       Hi! This is the home page.
       <br>
-      <a href="/hello">Get a compliment!</a>
+      <a href="/hello">Get a compliment or diss!</a>
     </html>
 
     """
@@ -63,7 +68,10 @@ def say_hello():
           <br>
           <br>
           <input type="submit" value="Submit">
+        <!-- redirecting to /diss  -->
+          <a href="/diss">Get a diss!</a>
         </form>
+
       </body>
     </html>    """
 
@@ -88,6 +96,26 @@ def greet_person():
       </body>
     </html>
     """.format(user=player, compliment=compliment)
+
+@app.route('/diss')
+def diss_person():
+    """Diss the person by name."""
+
+    # Set default value to n00b instead of None (which is .get()'s default).
+    player = request.args.get("person", "n00b")
+    diss = choice(DISSES)
+
+    return """
+    <!doctype html>
+    <html>
+      <head>
+        <title>BURN</title>
+      </head>
+      <body>
+        Yo {user}! You're so {diss}!
+      </body>
+    </html>
+    """.format(user=player, diss=diss)
 
 
 if __name__ == '__main__':
