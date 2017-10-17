@@ -80,10 +80,11 @@ def say_hello():
 def greet_person():
     """Get user by name."""
 
+    # Get 'person' from the form input and save to variable.
     player = request.args.get("person")
     compliment = request.args.get("compliment")
 
-    # compliment = choice(AWESOMENESS)
+    # compliment = choice(AWESOMENESS)  # No longer using this; user chooses compliment instead.
 
     return """
     <!doctype html>
@@ -95,7 +96,9 @@ def greet_person():
         Hi, {user}! I think you're {compliment}!
       </body>
     </html>
-    """.format(user=player, compliment=compliment)
+    """.format(user=player, compliment=compliment)  # user matches the user in
+    # the jinja formatter and it's value is set to equal the variable 'player'
+    # that captured what was returned from the form using 'request.args'.
 
 @app.route('/diss')
 def diss_person():
@@ -103,19 +106,19 @@ def diss_person():
 
     # Set default value to n00b instead of None (which is .get()'s default).
     player = request.args.get("person", "n00b")
-    diss = choice(DISSES)
+    insult = choice(DISSES)
 
     return """
     <!doctype html>
     <html>
       <head>
-        <title>BURN</title>
+        <title>Burnnnn</title>
       </head>
       <body>
         Yo {user}! You're so {diss}!
       </body>
     </html>
-    """.format(user=player, diss=diss)
+    """.format(user=player, diss=insult)
 
 
 if __name__ == '__main__':
